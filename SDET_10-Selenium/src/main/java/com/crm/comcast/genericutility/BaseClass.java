@@ -10,6 +10,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 
 import com.crm.comcast.objectrepositoryUtility.Home;
 import com.crm.comcast.objectrepositoryUtility.Login;
@@ -23,13 +24,15 @@ public class BaseClass {
 	public DataBaseUtilities dbLb = new DataBaseUtilities();
 	public WebDriver driver;
 	
-	@BeforeSuite
+	@BeforeSuite(groups = {"smokeTest" , "regressionTest"})
 	public void configBeforeSuite() throws Throwable {
+		System.out.println("==============Connect to DB=============");
 		dbLb.connectToDB();
 	}
 	
-	@BeforeClass
+	@BeforeClass(groups = {"smokeTest" , "regressionTest"})
 	public void configBeforeClass() throws Throwable {
+		System.out.println("============launch the Browser==========");
 		/* launch the Browser*/
 		/*read Common Data*/
 		String URL = fLib.getPropertyKeyValue("url");
@@ -50,9 +53,34 @@ public class BaseClass {
 		 driver.get(URL);
 	}
 	
+	@Parameters("BROWSER")
+	//@BeforeClass(groups = {"smokeTest" , "regressionTest"})
+	public void configBeforeClassParllel(String Browser) throws Throwable {
+		System.out.println("============launch the Browser==========");
+		/* launch the Browser*/
+		/*read Common Data*/
+		String URL = fLib.getPropertyKeyValue("url");
+
+		
+		
+		 if(Browser.equals("firefox")) {
+		    driver = new FirefoxDriver();
+		 }else if(Browser.equals("chrome")) {
+			 driver = new ChromeDriver();
+		 }else if(Browser.equals("ie")) {
+			 driver = new InternetExplorerDriver();
+		 }else {
+			 driver = new ChromeDriver();
+		 }
+		
+		 wlib.waitForPageToLoad(driver);
+		 driver.get(URL);
+	}
 	
-	@BeforeMethod
+	
+	@BeforeMethod(groups = {"smokeTest" , "regressionTest"})
 	public void configBeforeMtd() throws Throwable {
+		System.out.println("====login to Application=====");
 		/*step-1 : login to Application*/
 		String USERNAME = fLib.getPropertyKeyValue("username");
 		String PASSWORD = fLib.getPropertyKeyValue("password");
@@ -60,23 +88,27 @@ public class BaseClass {
 		lp.loginToAPP(USERNAME, PASSWORD);
 	}
 	
-	@AfterMethod
+	@AfterMethod(groups = {"smokeTest" , "regressionTest"})
 	public void configAfterMethod() throws Throwable {
+		System.out.println("====logout from Application=====");
 		Home hp = new Home(driver);
 	      /*step-* : logout */
 			  hp.logout();
+			  Login lp = new Login(driver);
+			  wlib.waitForElemnetVisibality(driver,lp.getLoginBtn());      
     }
 	
 	
-	@AfterClass
+	@AfterClass(groups = {"smokeTest" , "regressionTest"})
 	public void configAfterClass() {
+		System.out.println("============Close the Browser==========");
 		driver.close();
 	}
 	
-	@AfterSuite
+	@AfterSuite(groups = {"smokeTest" , "regressionTest"})
 	public void configAfterSuite() throws Throwable {
 		dbLb.closeDb();
-		
+		System.out.println("==============close db Connection=============");
 	}
 
 }

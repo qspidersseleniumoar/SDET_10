@@ -3,11 +3,17 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.crm.comcast.organizationtest.OrganizationTest">
+      <class name="com.crm.comcast.contacttest.CreateContact">
         <methods>
-          <include name="createOrganizationTest"/>
+          <include name="configAfterSuite"/>
+          <include name="configBeforeMtd"/>
+          <include name="createContactWithOrg"/>
+          <include name="configAfterMethod"/>
+          <include name="configAfterClass"/>
+          <include name="configBeforeClass"/>
+          <include name="configBeforeSuite"/>
         </methods>
-      </class> <!-- com.crm.comcast.organizationtest.OrganizationTest -->
+      </class> <!-- com.crm.comcast.contacttest.CreateContact -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

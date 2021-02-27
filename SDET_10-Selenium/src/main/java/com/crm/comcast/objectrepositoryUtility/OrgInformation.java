@@ -5,10 +5,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class CreateOrgInformation {
+public class OrgInformation {
 	WebDriver driver;
 	
-	public CreateOrgInformation(WebDriver driver){
+	public OrgInformation(WebDriver driver){
 		this.driver =  driver;
 		PageFactory.initElements(driver, this);
 	}

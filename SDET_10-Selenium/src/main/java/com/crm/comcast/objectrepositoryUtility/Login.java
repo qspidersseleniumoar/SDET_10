@@ -24,6 +24,9 @@ public class Login {
 
 
 	
+	public WebElement getLoginBtn() {
+		return loginBtn;
+	}
 	public void loginToAPP(String username , String password) {
 		userNameEdt.sendKeys(username);
 		passwordEdt.sendKeys(password);

@@ -14,6 +14,22 @@ public class Organizations {
 	}
 	
 	
+	@FindBy(name = "search_text")
+	private WebElement serchEdt;
+	
+	@FindBy(name = "search")
+	private WebElement serchBtn;
+	
+	
+	public WebElement getSerchEdt() {
+		return serchEdt;
+	}
+
+	public WebElement getSerchBtn() {
+		return serchBtn;
+	}
+
+
 	@FindBy(xpath = "//img[@title='Create Organization...']")
 	private WebElement createOrgImg;
 

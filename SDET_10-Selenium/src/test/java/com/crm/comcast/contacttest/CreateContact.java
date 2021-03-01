@@ -6,6 +6,7 @@ package com.crm.comcast.contacttest;
  */
 
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.crm.comcast.genericutility.BaseClass;
@@ -17,6 +18,7 @@ import com.crm.comcast.objectrepositoryUtility.Home;
 import com.crm.comcast.objectrepositoryUtility.OrgInformation;
 import com.crm.comcast.objectrepositoryUtility.Organizations;
 
+@Listeners(com.crm.comcast.genericutility.ItestListenerIMP.class)
 public class CreateContact extends BaseClass{
 
 	
@@ -91,6 +93,7 @@ public class CreateContact extends BaseClass{
 				   wlib.waitForElemnetVisibality(driver, cip.getSuccessfulMsg());
 				   String actConactNAme = cip.getSuccessfulMsg().getText();
 				   Assert.assertTrue(actConactNAme.contains(contactLastNAme));
+				   Assert.assertTrue(false);
 		
 	}
 }

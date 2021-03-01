@@ -23,6 +23,7 @@ public class BaseClass {
 	public WebDriverUtility wlib = new WebDriverUtility();
 	public DataBaseUtilities dbLb = new DataBaseUtilities();
 	public WebDriver driver;
+	public static WebDriver staticDriver;
 	
 	@BeforeSuite(groups = {"smokeTest" , "regressionTest"})
 	public void configBeforeSuite() throws Throwable {
@@ -38,7 +39,7 @@ public class BaseClass {
 		String URL = fLib.getPropertyKeyValue("url");
 
 		String BROWSER = fLib.getPropertyKeyValue("browser");
-		
+		try {
 		 if(BROWSER.equals("firefox")) {
 		    driver = new FirefoxDriver();
 		 }else if(BROWSER.equals("chrome")) {
@@ -48,9 +49,13 @@ public class BaseClass {
 		 }else {
 			 driver = new ChromeDriver();
 		 }
-		
+		staticDriver= driver;
 		 wlib.waitForPageToLoad(driver);
 		 driver.get(URL);
+		}
+		catch (Exception e) {
+			throw new BrowserDriverMissingException();
+		}
 	}
 	
 	@Parameters("BROWSER")

@@ -1,22 +1,28 @@
 package com.crm.comcast.genericutility;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.google.common.io.Files;
 
 /**
  *  contains Webdriver specific reusable utility
  * @author Deepak
  *
  */
-public class WebDriverUtility {
+public class WebDriverUtility{
 
 /**
  * 
@@ -140,8 +146,18 @@ public class WebDriverUtility {
 		act.moveToElement(element).perform();
 	}
 	
-	
-	
+	/**
+	 * Used to take screenshot
+	 * @param driver
+	 * @param methodName
+	 * @throws IOException
+	 */
+	public void takeScreenShot(String methodName) throws IOException {
+		EventFiringWebDriver event=new EventFiringWebDriver(BaseClass.staticDriver);
+		File src=event.getScreenshotAs(OutputType.FILE);
+		File dest=new File("./Screenshots/"+methodName+".PNG");
+		Files.copy(src, dest);
+	}
 	
 	
 }

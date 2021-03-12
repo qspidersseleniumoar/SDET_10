@@ -1,9 +1,14 @@
 package com.crm.comcast.genericutility;
 
+
+
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -12,6 +17,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
+import com.crm.comcast.events.EventHandler;
 import com.crm.comcast.objectrepositoryUtility.Home;
 import com.crm.comcast.objectrepositoryUtility.Login;
 
@@ -22,13 +28,16 @@ public class BaseClass {
 	public JavaUtility jLib = new JavaUtility();
 	public WebDriverUtility wlib = new WebDriverUtility();
 	public DataBaseUtilities dbLb = new DataBaseUtilities();
-	public WebDriver driver;
+	public WebDriver driverRef;
+	public EventFiringWebDriver driver;
 	public static WebDriver staticDriver;
+	public Logger logger;
 	
 	@BeforeSuite(groups = {"smokeTest" , "regressionTest"})
 	public void configBeforeSuite() throws Throwable {
 		System.out.println("==============Connect to DB=============");
 		dbLb.connectToDB();
+		
 	}
 	
 	@BeforeClass(groups = {"smokeTest" , "regressionTest"})
@@ -39,23 +48,23 @@ public class BaseClass {
 		String URL = fLib.getPropertyKeyValue("url");
 
 		String BROWSER = fLib.getPropertyKeyValue("browser");
-		try {
+		
 		 if(BROWSER.equals("firefox")) {
-		    driver = new FirefoxDriver();
+		    driverRef = new FirefoxDriver();
 		 }else if(BROWSER.equals("chrome")) {
-			 driver = new ChromeDriver();
+			 driverRef = new ChromeDriver();
 		 }else if(BROWSER.equals("ie")) {
-			 driver = new InternetExplorerDriver();
+			 driverRef = new InternetExplorerDriver();
 		 }else {
-			 driver = new ChromeDriver();
+			 driverRef = new ChromeDriver();
 		 }
+		 driver=new EventFiringWebDriver(driverRef);
+		 EventHandler event=new EventHandler();
+		 driver.register(event);
 		staticDriver= driver;
 		 wlib.waitForPageToLoad(driver);
 		 driver.get(URL);
-		}
-		catch (Exception e) {
-			throw new BrowserDriverMissingException();
-		}
+		
 	}
 	
 	@Parameters("BROWSER")
@@ -69,13 +78,13 @@ public class BaseClass {
 		
 		
 		 if(Browser.equals("firefox")) {
-		    driver = new FirefoxDriver();
+		    //driver = new FirefoxDriver();
 		 }else if(Browser.equals("chrome")) {
-			 driver = new ChromeDriver();
+			// driver = new ChromeDriver();
 		 }else if(Browser.equals("ie")) {
-			 driver = new InternetExplorerDriver();
+			// driver = new InternetExplorerDriver();
 		 }else {
-			 driver = new ChromeDriver();
+			// driver = new ChromeDriver();
 		 }
 		
 		 wlib.waitForPageToLoad(driver);

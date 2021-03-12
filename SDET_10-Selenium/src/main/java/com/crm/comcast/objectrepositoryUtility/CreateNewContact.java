@@ -25,6 +25,13 @@ public class CreateNewContact extends WebDriverUtility{
 	@FindBy(xpath = "//input[@title='Save [Alt+S]']")
 	private WebElement saveButton;
 	
+	@FindBy(xpath = "//input[@name='website']")
+	private WebElement websiteTF;
+	
+	@FindBy(id="tickersymbol")
+	private WebElement tickerSymbolTF;
+	
+		
 	public void createContact(String lastName) {
 		waitForElemnetVisibality(driver, lastNameEdt);
 		lastNameEdt.sendKeys(lastName);

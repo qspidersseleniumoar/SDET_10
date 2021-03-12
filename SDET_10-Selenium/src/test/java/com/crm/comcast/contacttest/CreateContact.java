@@ -25,6 +25,7 @@ public class CreateContact extends BaseClass{
 	@Test(groups = "smokeTest")
 	public void createContact() throws Throwable {
 		/*read test Data */
+		
 		String contactNAme = excel.getExcelData("Contact", 4, 2);
 		/*step-2:  navigate to Contact Page*/
 		Home hp = new Home(driver);

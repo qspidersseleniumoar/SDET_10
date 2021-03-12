@@ -1,7 +1,9 @@
 package com.crm.comcast.genericutility;
 
+import org.testng.Assert;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
+import org.testng.annotations.Test;
 
 public class RetryAnalyzer implements IRetryAnalyzer{
 	int counter=0;
@@ -16,6 +18,11 @@ public class RetryAnalyzer implements IRetryAnalyzer{
 		return false;
 	}
 	
+	
+	@Test(retryAnalyzer = com.crm.comcast.genericutility.RetryAnalyzer.class)
+	public void test() {
+		Assert.assertTrue(false);
+	}
 		
 
 }

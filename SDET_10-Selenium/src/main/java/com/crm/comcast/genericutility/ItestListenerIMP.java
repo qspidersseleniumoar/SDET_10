@@ -35,7 +35,7 @@ public class ItestListenerIMP implements ITestListener {
 
 
 	public void onTestFailure(ITestResult result) {	
-		Log.info(result.getMethod().getMethodName()+" is Failed");
+		
 		String	date=new JavaUtility().getCurrentSystemDate().replace(" ", "_").replace(":", "_");
 		try {
 			WebDriverUtility wlib=new WebDriverUtility();
@@ -49,13 +49,13 @@ public class ItestListenerIMP implements ITestListener {
 
 
 	public void onTestSkipped(ITestResult arg0) {					
-		Log.info(arg0.getMethod().getMethodName()+" is skipped");				
+						
 
 	}		
 
 
 	public void onTestStart(ITestResult arg0) {					
-		Log.info(arg0+" is started");			
+				
 
 	}		
 

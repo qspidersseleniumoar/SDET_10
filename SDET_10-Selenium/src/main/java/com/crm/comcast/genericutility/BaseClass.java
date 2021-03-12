@@ -28,10 +28,10 @@ public class BaseClass {
 	public JavaUtility jLib = new JavaUtility();
 	public WebDriverUtility wlib = new WebDriverUtility();
 	public DataBaseUtilities dbLb = new DataBaseUtilities();
-	public WebDriver driverRef;
-	public EventFiringWebDriver driver;
+	public WebDriver driver;
+	
 	public static WebDriver staticDriver;
-	public Logger logger;
+	
 	
 	@BeforeSuite(groups = {"smokeTest" , "regressionTest"})
 	public void configBeforeSuite() throws Throwable {
@@ -50,17 +50,16 @@ public class BaseClass {
 		String BROWSER = fLib.getPropertyKeyValue("browser");
 		
 		 if(BROWSER.equals("firefox")) {
-		    driverRef = new FirefoxDriver();
+		    driver = new FirefoxDriver();
 		 }else if(BROWSER.equals("chrome")) {
-			 driverRef = new ChromeDriver();
+			 driver= new ChromeDriver();
 		 }else if(BROWSER.equals("ie")) {
-			 driverRef = new InternetExplorerDriver();
+			 driver= new InternetExplorerDriver();
 		 }else {
-			 driverRef = new ChromeDriver();
+			 driver = new ChromeDriver();
 		 }
-		 driver=new EventFiringWebDriver(driverRef);
-		 EventHandler event=new EventHandler();
-		 driver.register(event);
+		 
+		 
 		staticDriver= driver;
 		 wlib.waitForPageToLoad(driver);
 		 driver.get(URL);
